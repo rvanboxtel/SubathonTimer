@@ -13,7 +13,7 @@ window.widget.bindableData.registerBindableDataVariable({ key: "subathon_pauseMe
 window.widget.bindableData.registerBindableDataVariable({ key: "subathon_endMessage", displayName: "Message when Subathon ended", value: "Time's up", categoryName: "Subathon" });
 
 var demoDuration=24*3600;
-var demoMode=false;
+var demoMode=true;
 // register required persistent data
 
 window.widget.persistentStorage.registerPersistentDataVariable({
