@@ -30,7 +30,7 @@ window.controlPanel.serviceModules.registerServiceModuleProvider({
 
                 },
                 "maxDuration": -1,
-                "commands": { "pause": "!subpause", "resume": "!subresume", "addTime": "!subaddtime" },
+                "commands": { "pause": "!subpause", "resume": "!subresume", "addTime": "!subaddtime", "removeTime": "!subremovetime" },
                 "messages":{"pauseMessage":"Paused...","endMessage":"Time's Up!"}
             }
             storeManagedData();
@@ -115,6 +115,7 @@ window.controlPanel.serviceModules.registerServiceModuleProvider({
             managedData.commands.pause=document.getElementById("pause-command").value;
             managedData.commands.resume=document.getElementById("resume-command").value;
             managedData.commands.addTime=document.getElementById("addtime-command").value;
+            managedData.commands.removeTime=document.getElementById("removetime-command").value;
            
             managedData.messages.pasueMessage=document.getElementById("pause-message").value;
             managedData.messages.endMessage=document.getElementById("end-message").value;

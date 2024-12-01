@@ -77,7 +77,7 @@ window.widget.serviceModules.registerServiceModuleProvider({
 
           },
           "maxDuration": -1,
-          "commands": { "pause": "!subpause", "resume": "!subresume", "addTime": "!subaddtime" },
+          "commands": { "pause": "!subpause", "resume": "!subresume", "addTime": "!subaddtime", "removeTime": "!subremovetime" },
           "messages":{"pauseMessage":"Paused...","endMessage":"Time's Up!"}
           
       }
@@ -161,6 +161,11 @@ window.widget.serviceModules.registerServiceModuleProvider({
           let str = chatMessage.textMessageDetails.message.split(' ')[1];
           if (isInt(str)) addTime(parseInt(str, 10));
           break;
+        case managedData.commands.removeTime:
+          console.log("remove time");
+          let str = "-" + chatMessage.textMessageDetails.message.split(' ')[1];
+          if (isInt(str)) removeTime(parseInt(str, 10));
+          break;
         case managedData.commands.pause:
           if (window.widget.persistentStorage.getValue({ key: "state" })!="play") return;
           window.widget.persistentStorage.requestSetValue({
@@ -219,7 +224,7 @@ window.widget.serviceModules.registerServiceModuleProvider({
               if (isInt(str) && managedData.timeAdditions.t2[0]) addTime(parseInt(str, 10));
               break;
             case "3000":
-              str = managedData.timeAdditions.t2[1];
+              str = managedData.timeAdditions.t3[1];
               if (isInt(str) && managedData.timeAdditions.t3[0]) addTime(parseInt(str, 10));
               break;
           }
@@ -263,11 +268,19 @@ window.widget.serviceModules.registerServiceModuleProvider({
     }
     window.widget.events.on('persistentStorageVariableValueChanged', handle_persistentStorageVariableValueChanged);
 
-    // handle dadding time from chat
+    // handle adding time from chat
     async function addTime(sec) {
       window.widget.persistentStorage.requestSetValue({
           key: "targetDate",
           value: Number(window.widget.persistentStorage.getValue({ key: "targetDate" })) + sec*1000,
+          requestKey: Date.now().toString()
+        });
+    }
+    // handle removing time from chat
+    async function removeTime(sec) {
+      window.widget.persistentStorage.requestSetValue({
+          key: "targetDate",
+          value: Number(window.widget.persistentStorage.getValue({ key: "targetDate" })) - sec*1000,
           requestKey: Date.now().toString()
         });
     }
